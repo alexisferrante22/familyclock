@@ -38,9 +38,9 @@ class UserManager {
                 //initialize user's location data - select from map?
                 exists = true
                 self.updateUserEmailInDB {
-                    completion(exists)
                 }
             }
+            completion(exists)
         }
     }
     
@@ -212,7 +212,7 @@ class UserManager {
         if(user != nil){
             getNumberOfFriends{ numFriends in
                 if(numFriends < self.NUM_ALLOWED_FRIENDS){
-                    self.dbRef.document((self.user?.uid)!).collection("friends").addDocument(data: ["friend": friendEmail])
+                    self.dbRef.document((self.user?.uid)!).collection("friends").addDocument(data: ["email": friendEmail])
                 } else {
                     print("did not add \(friendEmail) as friend - you already have too many friends")
                 }
