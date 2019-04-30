@@ -20,6 +20,8 @@
 		B36AD45B226FAD32007F5405 /* familyclockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36AD45A226FAD32007F5405 /* familyclockUITests.swift */; };
 		B36AD469226FADFF007F5405 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B36AD468226FADFF007F5405 /* GoogleService-Info.plist */; };
 		B36AD46B226FBDCA007F5405 /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36AD46A226FBDCA007F5405 /* SigninViewController.swift */; };
+		B36AD46D22715613007F5405 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B36AD46C22715612007F5405 /* CoreLocation.framework */; };
+		B36AD4B12273D054007F5405 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36AD4B02273D054007F5405 /* UserManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		B36AD45C226FAD32007F5405 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B36AD468226FADFF007F5405 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B36AD46A226FBDCA007F5405 /* SigninViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninViewController.swift; sourceTree = "<group>"; };
+		B36AD46C22715612007F5405 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B36AD4B02273D054007F5405 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		E8867ECFCDE6CA388E37EE03 /* Pods_familyclockUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_familyclockUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4D2DD5831CBAECCEF856226 /* Pods-familyclockTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familyclockTests.release.xcconfig"; path = "Target Support Files/Pods-familyclockTests/Pods-familyclockTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B36AD46D22715613007F5405 /* CoreLocation.framework in Frameworks */,
 				55DC8C910E6847A0AA264A0E /* Pods_familyclock.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,6 +116,7 @@
 		73E4E971B53D771061A34E64 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B36AD46C22715612007F5405 /* CoreLocation.framework */,
 				8D6922F5D8924F8F03B51C18 /* Pods_familyclock.framework */,
 				1C4719E1EC2D6203E1E3550C /* Pods_familyclockTests.framework */,
 				E8867ECFCDE6CA388E37EE03 /* Pods_familyclockUITests.framework */,
@@ -146,6 +152,7 @@
 			children = (
 				B36AD437226FAD2C007F5405 /* AppDelegate.swift */,
 				B36AD439226FAD2C007F5405 /* ViewController.swift */,
+				B36AD4B02273D054007F5405 /* UserManager.swift */,
 				B36AD46A226FBDCA007F5405 /* SigninViewController.swift */,
 				B36AD43B226FAD2C007F5405 /* Main.storyboard */,
 				B36AD441226FAD31007F5405 /* Assets.xcassets */,
@@ -382,9 +389,13 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-familyclock/Pods-familyclock-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -392,9 +403,13 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -432,6 +447,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B36AD4B12273D054007F5405 /* UserManager.swift in Sources */,
 				B36AD46B226FBDCA007F5405 /* SigninViewController.swift in Sources */,
 				B36AD440226FAD2C007F5405 /* familyclock.xcdatamodeld in Sources */,
 				B36AD43A226FAD2C007F5405 /* ViewController.swift in Sources */,

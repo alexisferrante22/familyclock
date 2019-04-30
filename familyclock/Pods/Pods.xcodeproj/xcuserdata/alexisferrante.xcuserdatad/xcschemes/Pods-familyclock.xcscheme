@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "946736BCEF69DE1F6C84CD2085F368BB"
+               BlueprintIdentifier = "30492F9F2DBD111B163C2640DB14EEDE"
                BuildableName = "Pods_familyclock.framework"
                BlueprintName = "Pods-familyclock"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "946736BCEF69DE1F6C84CD2085F368BB"
+            BlueprintIdentifier = "30492F9F2DBD111B163C2640DB14EEDE"
             BuildableName = "Pods_familyclock.framework"
             BlueprintName = "Pods-familyclock"
             ReferencedContainer = "container:Pods.xcodeproj">
