@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import FirebaseFirestore
 import Firebase
+import FirebaseFirestore
 import GoogleSignIn
 import CoreLocation
 

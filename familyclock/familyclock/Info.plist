@@ -53,7 +53,9 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>using your location for tracking</string>
+	<string>Do you allow this app to know your current location?</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Will you allow this app to always know your location?</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>usin loc</string>
 </dict>
