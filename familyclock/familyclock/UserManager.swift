@@ -19,16 +19,11 @@ class UserManager {
     let user = Auth.auth().currentUser
     let validLocations = ["current", "home", "work", "school", "dentist", "gym"]
     let NUM_ALLOWED_FRIENDS = 6
-    
-    /* todo (Alexis): Write function to initialize database with locations user selects on map (once Brad completes the
-     view for this part) */
+    //let ACCEPTABLE_DISTANCE_FROM_LOCATION_METERS = 10
 
-    /* returns true if user is new and data has been initialized, false if user already existed in database.
-     todo (Alexis): initialize user in DB with location data that they select on map when prompted after sign up
-     Currently, this function only adds a document in the database for the user and attaches their email as a field to
-     this document.
+    /* returns true if user is new and data has been initialized, false if user already existed in database. initializes user in DB with location data that is passed in as a parameter
      */
-    func initializeIfNewUser(completion: @escaping (Bool) -> Void) {
+    func initializeIfNewUser(locationData: [(String,(CLLocationDegrees, CLLocationDegrees))], completion: @escaping (Bool) -> Void) {
         let docRef = dbRef.document((user?.uid)!)
         var exists = true
         docRef.getDocument { (document, error) in
@@ -38,6 +33,10 @@ class UserManager {
                 //initialize user's location data - select from map?
                 exists = true
                 self.updateUserEmailInDB {
+                    for (locationLabel, (longitude, latitude)) in locationData{
+                        print(locationLabel, longitude, latitude)
+                        docRef.collection("locations").addDocument(data: ["locationType":locationLabel, "latitude": latitude, "longitude": longitude])
+                    }
                 }
             }
             completion(exists)
@@ -239,8 +238,23 @@ class User {
         email = emailAddress
     }
     
-    /* todo (Alexis): Write function to return the appropriate location type of a User at a given time.
-     Will be used in the view controller to determine where the clock hand for this person should be pointing to.
+    /* function that returns the appropriate location type of a User at a given time.
      */
+    
+    func getLocation() -> String {
+        let currentLocation = CLLocation(latitude: self.currentLocation.1, longitude: self.currentLocation.0)
+        print("current location:", currentLocation)
+        let locations = [("home", homeLocation), ("work", workLocation), ("school", schoolLocation), ("gym", gymLocation), ("dentist", dentistLocation)]
+        
+        for (label,(long, lat)) in locations {
+            let newLocation = CLLocation(latitude: lat, longitude: long)
+            let distance = newLocation.distance(from: currentLocation)
+            //print(label,long,lat, " distance from current: ", distance)
+            if(distance <= 10){
+                return label
+            }
+        }
+        return "lost"
+    }
 }
 

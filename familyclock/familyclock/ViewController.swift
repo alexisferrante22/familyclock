@@ -51,21 +51,35 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
          to delete these function calls, they are only examples to display
          functionality. */
         
-//        userManager.initializeIfNewUser { (exists) in
-//            print("current user is a new user? ", exists)
-//        }
-//
-//        userManager.addFriend(friendEmail: "alexisf22@gmail.com"){
+        let deg = CLLocationDegrees(80.0)
+        let deg2 = CLLocationDegrees(20.0)
+        let locationData = [("current", (deg2, deg2)), ("home", (deg, deg)), ("work", (deg, deg)), ("gym", (deg, deg)), ("school", (deg, deg)), ("dentist", (deg2, deg2))]
+        
+        userManager.initializeIfNewUser(locationData: locationData) { (exists) in
+            print("current user is a new user? ", exists)
+        }
+
+//        userManager.addFriend(friendEmail: "alexisf4567@gmail.com"){
 //            print("adding friend")
 //        }
-//
-//        userManager.getFriendsEmails {emailAddresses in
-//            print(emailAddresses)
-//        }
-//
-//        userManager.getNumberOfFriends{numFriends in
-//            print("num friends: \(numFriends)")
-//        }
+
+        userManager.getFriendsEmails {emailAddresses in
+            print(emailAddresses)
+        }
+
+        userManager.getNumberOfFriends{numFriends in
+            print("num friends: \(numFriends)")
+        }
+        
+        userManager.getLocationTypeCoordsForUser(userDocumentReference: db.collection("users").document((userManager.user?.uid)!), locationType: "home"){ (homeLong, homeLat) in
+            print("fetching home coords", homeLong, homeLat)
+            }
+        userManager.getFriendsLocations {
+            print("getting friends locations")
+            if(self.userManager.friendUsers.count > 0){
+                print(self.userManager.friendUsers[0].getLocation())
+            }
+        }
     }
 }
 
