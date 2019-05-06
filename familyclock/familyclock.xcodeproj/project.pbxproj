@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1BF67DBD2278A42A002A9C9C /* LocSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF67DBC2278A42A002A9C9C /* LocSelectViewController.swift */; };
+		1BF67DE52280E71A002A9C9C /* MagicMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF67DE42280E71A002A9C9C /* MagicMapController.swift */; };
 		3CA22C91AA605487C919761E /* Pods_familyclockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C4719E1EC2D6203E1E3550C /* Pods_familyclockTests.framework */; };
 		55DC8C910E6847A0AA264A0E /* Pods_familyclock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D6922F5D8924F8F03B51C18 /* Pods_familyclock.framework */; };
 		A57FD81D9DBCCB6D18F9F7A8 /* Pods_familyclockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8867ECFCDE6CA388E37EE03 /* Pods_familyclockUITests.framework */; };
@@ -45,6 +46,7 @@
 /* Begin PBXFileReference section */
 		08CF86437A048DFE83740E28 /* Pods-familyclockUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familyclockUITests.release.xcconfig"; path = "Target Support Files/Pods-familyclockUITests/Pods-familyclockUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1BF67DBC2278A42A002A9C9C /* LocSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocSelectViewController.swift; sourceTree = "<group>"; };
+		1BF67DE42280E71A002A9C9C /* MagicMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicMapController.swift; sourceTree = "<group>"; };
 		1C4719E1EC2D6203E1E3550C /* Pods_familyclockTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_familyclockTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2065862F5830E6A416FBD1AA /* Pods-familyclockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familyclockTests.debug.xcconfig"; path = "Target Support Files/Pods-familyclockTests/Pods-familyclockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2FC4FDF7D77F55787C389299 /* Pods-familyclock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familyclock.debug.xcconfig"; path = "Target Support Files/Pods-familyclock/Pods-familyclock.debug.xcconfig"; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				B36AD437226FAD2C007F5405 /* AppDelegate.swift */,
 				B36AD439226FAD2C007F5405 /* ViewController.swift */,
 				1BF67DBC2278A42A002A9C9C /* LocSelectViewController.swift */,
+				1BF67DE42280E71A002A9C9C /* MagicMapController.swift */,
 				B36AD4B02273D054007F5405 /* UserManager.swift */,
 				B36AD46A226FBDCA007F5405 /* SigninViewController.swift */,
 				B36AD43B226FAD2C007F5405 /* Main.storyboard */,
@@ -452,6 +455,7 @@
 			files = (
 				B36AD4B12273D054007F5405 /* UserManager.swift in Sources */,
 				B36AD46B226FBDCA007F5405 /* SigninViewController.swift in Sources */,
+				1BF67DE52280E71A002A9C9C /* MagicMapController.swift in Sources */,
 				B36AD440226FAD2C007F5405 /* familyclock.xcdatamodeld in Sources */,
 				B36AD43A226FAD2C007F5405 /* ViewController.swift in Sources */,
 				B36AD438226FAD2C007F5405 /* AppDelegate.swift in Sources */,

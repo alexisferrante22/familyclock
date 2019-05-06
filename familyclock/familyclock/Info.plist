@@ -57,6 +57,6 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Will you allow this app to always know your location?</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>usin loc</string>
+	<string>Do you allow this app to always know your location?</string>
 </dict>
 </plist>
