@@ -20,6 +20,7 @@ class SigninViewController: UIViewController, GIDSignInUIDelegate {
         
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().signIn()
+        
         handle = Auth.auth().addStateDidChangeListener() { (auth, user) in
             if user != nil {
                 //MeasurementHelper.sendLoginEvent()

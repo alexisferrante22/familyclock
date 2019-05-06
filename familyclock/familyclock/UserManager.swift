@@ -43,6 +43,20 @@ class UserManager {
         }
     }
     
+    func isNewUser(completion: @escaping (Bool) -> Void) {
+        let docRef = dbRef.document((user?.uid)!)
+        var exists = true
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                exists = false
+            } else {
+                exists = true
+            }
+            completion(exists)
+        }
+    }
+    
+    
     /* returns the list of email addresses that are in this user's friends list. This function is primarily being used to
      aggregate these email addresses so we can query the users in the DB associted with each email address to
      obtain their location data.
