@@ -10,6 +10,7 @@
 		3CA22C91AA605487C919761E /* Pods_familyclockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C4719E1EC2D6203E1E3550C /* Pods_familyclockTests.framework */; };
 		55DC8C910E6847A0AA264A0E /* Pods_familyclock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D6922F5D8924F8F03B51C18 /* Pods_familyclock.framework */; };
 		A57FD81D9DBCCB6D18F9F7A8 /* Pods_familyclockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8867ECFCDE6CA388E37EE03 /* Pods_familyclockUITests.framework */; };
+		B30D1854228090500016041F /* LocSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30D1853228090500016041F /* LocSelectViewController.swift */; };
 		B36AD438226FAD2C007F5405 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36AD437226FAD2C007F5405 /* AppDelegate.swift */; };
 		B36AD43A226FAD2C007F5405 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36AD439226FAD2C007F5405 /* ViewController.swift */; };
 		B36AD43D226FAD2C007F5405 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B36AD43B226FAD2C007F5405 /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 		41DDB6361E7E2FBBCD847AF1 /* Pods-familyclock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familyclock.release.xcconfig"; path = "Target Support Files/Pods-familyclock/Pods-familyclock.release.xcconfig"; sourceTree = "<group>"; };
 		739DE2DBA468F6853D732652 /* Pods-familyclockUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familyclockUITests.debug.xcconfig"; path = "Target Support Files/Pods-familyclockUITests/Pods-familyclockUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8D6922F5D8924F8F03B51C18 /* Pods_familyclock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_familyclock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B30D1853228090500016041F /* LocSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocSelectViewController.swift; sourceTree = "<group>"; };
 		B36AD434226FAD2C007F5405 /* familyclock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = familyclock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B36AD437226FAD2C007F5405 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B36AD439226FAD2C007F5405 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				B36AD439226FAD2C007F5405 /* ViewController.swift */,
 				B36AD4B02273D054007F5405 /* UserManager.swift */,
 				B36AD46A226FBDCA007F5405 /* SigninViewController.swift */,
+				B30D1853228090500016041F /* LocSelectViewController.swift */,
 				B36AD43B226FAD2C007F5405 /* Main.storyboard */,
 				B36AD441226FAD31007F5405 /* Assets.xcassets */,
 				B36AD443226FAD31007F5405 /* LaunchScreen.storyboard */,
@@ -452,6 +455,7 @@
 				B36AD440226FAD2C007F5405 /* familyclock.xcdatamodeld in Sources */,
 				B36AD43A226FAD2C007F5405 /* ViewController.swift in Sources */,
 				B36AD438226FAD2C007F5405 /* AppDelegate.swift in Sources */,
+				B30D1854228090500016041F /* LocSelectViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

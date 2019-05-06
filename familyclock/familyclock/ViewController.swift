@@ -21,6 +21,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let ref = Database.database().reference()
     let user = Auth.auth().currentUser
     var userManager = UserManager()
+    var userLocationData : [(String, (CLLocationDegrees, CLLocationDegrees))] = []
     
 
     //map stuff
@@ -55,7 +56,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let deg2 = CLLocationDegrees(20.0)
         let locationData = [("current", (deg2, deg2)), ("home", (deg, deg)), ("work", (deg, deg)), ("gym", (deg, deg)), ("school", (deg, deg)), ("dentist", (deg2, deg2))]
         
-        userManager.initializeIfNewUser(locationData: locationData) { (exists) in
+        userManager.initializeIfNewUser(locationData: userLocationData) { (exists) in
             print("current user is a new user? ", exists)
         }
 
@@ -80,6 +81,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 print(self.userManager.friendUsers[0].getLocation())
             }
         }
+        
+        print("userlocationdata: ", self.userLocationData)
     }
 }
 
