@@ -108,16 +108,16 @@ import GoogleSignIn
 import MapKit
 import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var imageOutlet: UIImageView!
     
-        let locationManager = CLLocationManager()
-        let db = Firestore.firestore()
-        let ref = Database.database().reference()
-        let user = Auth.auth().currentUser
-        var userManager = UserManager()
-        var userLocationData : [(String, (CLLocationDegrees, CLLocationDegrees))] = []
+    let locationManager = CLLocationManager()
+    let db = Firestore.firestore()
+    let ref = Database.database().reference()
+    let user = Auth.auth().currentUser
+    var userManager = UserManager()
+    var userLocationData : [(String, (CLLocationDegrees, CLLocationDegrees))] = []
     
     var anchor: UIView! = UIView.init()
     var anchor2: UIView! = UIView.init()
@@ -129,7 +129,27 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //map stuff
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
         
+        userManager.isNewUser{ isNewUser in
+            if(isNewUser && self.userLocationData.isEmpty){
+                print("user didn't exist: transition to map select view")
+                self.performSegue(withIdentifier: "clockToLocationSelect", sender: self)
+            }
+        }
+        
+        if(!userLocationData.isEmpty){
+            userLocationData.insert(("current", (locationManager.location?.coordinate.longitude ?? 0.0, locationManager.location?.coordinate.latitude ?? 0.0)), at: 0)
+            
+            userManager.initializeIfNewUser(locationData: userLocationData){ isNewUser in
+                print("initializing: is new user? ", isNewUser)
+            }
+        }
+
         anchor = createAnchor(anchor: anchor)
         anchor.backgroundColor = UIColor.orange
         anchor2 = createAnchor(anchor: anchor2)
@@ -144,7 +164,7 @@ class ViewController: UIViewController {
         anchor6.backgroundColor = UIColor.yellow
         rotate()
         
-    
+        
     }
     
     func createAnchor(anchor: UIView) -> UIView {

@@ -24,7 +24,7 @@ class SigninViewController: UIViewController, GIDSignInUIDelegate {
         handle = Auth.auth().addStateDidChangeListener() { (auth, user) in
             if user != nil {
                 //MeasurementHelper.sendLoginEvent()
-                self.performSegue(withIdentifier: "signinToClockSegue", sender: self)
+                self.performSegue(withIdentifier: "signInToTabBarSegue", sender: self)
             }
         }
         

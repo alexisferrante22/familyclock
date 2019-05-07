@@ -25,13 +25,13 @@ class UserManager {
      */
     func initializeIfNewUser(locationData: [(String,(CLLocationDegrees, CLLocationDegrees))], completion: @escaping (Bool) -> Void) {
         let docRef = dbRef.document((user?.uid)!)
-        var exists = true
+        var isNewUser = true
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                exists = false
+                isNewUser = false
             } else {
                 //initialize user's location data - select from map?
-                exists = true
+                isNewUser = true
                 self.updateUserEmailInDB {
                     for (locationLabel, (longitude, latitude)) in locationData{
                         print(locationLabel, longitude, latitude)
@@ -39,7 +39,7 @@ class UserManager {
                     }
                 }
             }
-            completion(exists)
+            completion(isNewUser)
         }
     }
     
