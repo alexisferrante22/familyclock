@@ -15,18 +15,37 @@ class SigninViewController: UIViewController, GIDSignInUIDelegate {
 
     var handle: AuthStateDidChangeListenerHandle?
     
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        handle = Auth.auth().addStateDidChangeListener() { (auth, user) in
+//            if user != nil {
+//                //MeasurementHelper.sendLoginEvent()
+//                self.performSegue(withIdentifier: "signInToTabBarSegue", sender: self)
+//            }
+//        }
+//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().signIn()
         
-        handle = Auth.auth().addStateDidChangeListener() { (auth, user) in
-            if user != nil {
-                //MeasurementHelper.sendLoginEvent()
-                self.performSegue(withIdentifier: "signInToTabBarSegue", sender: self)
-            }
-        }
+        GIDSignIn.sharedInstance().signOut()
+        GIDSignIn.sharedInstance().disconnect()
+        
+        let googleButton = GIDSignInButton()
+        googleButton.frame = CGRect(x: 16, y:116+66, width: view.frame.width - 32, height: 50)
+        view.addSubview(googleButton)
+        googleButton.addTarget(self, action: #selector (handleGoogleSignIn), for: .touchUpInside)
+        
+//        GIDSignIn.sharedInstance().signIn()
+
+//        handle = Auth.auth().addStateDidChangeListener() { (auth, user) in
+//            if user != nil {
+//                print("state changed")
+//                self.performSegue(withIdentifier: "signInToTabBarSegue", sender: self)
+//            }
+//        }
         
         // TODO(developer) Configure the sign-in button look/feel
         // ...
@@ -34,7 +53,23 @@ class SigninViewController: UIViewController, GIDSignInUIDelegate {
         // Do any additional setup after loading the view.
     }
     
-
+    @objc func handleGoogleSignIn(){
+        print("new button press")
+        GIDSignIn.sharedInstance().signIn()
+        if Auth.auth().currentUser != nil {
+            self.performSegue(withIdentifier: "signInToTabBarSegue", sender: self)
+        }
+    }
+    
+    @IBAction func signInButtonPress(_ sender: Any) {
+        print("sign in pressed")
+        GIDSignIn.sharedInstance().signIn()
+        
+        if Auth.auth().currentUser != nil {
+            self.performSegue(withIdentifier: "signInToTabBarSegue", sender: self)
+        }
+    }
+    
     /*
     // MARK: - Navigation
 

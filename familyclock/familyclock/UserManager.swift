@@ -90,9 +90,16 @@ class UserManager {
                 return
             }
             var currentLocCoords : (CLLocationDegrees, CLLocationDegrees) = (0.0, 0.0)
+//            let data = snapshot.documents[0].data()
+//            let currentLocCoords = (data["longitude"], data["latitude"]) as! (CLLocationDegrees, CLLocationDegrees)
             for doc in snapshot.documents {
+                //print("ADJFHJSJDJDJDJDJJDJDJ", doc.data())
                 currentLocCoords = (doc.data()["longitude"], doc.data()["latitude"]) as! (CLLocationDegrees, CLLocationDegrees)
+
             }
+//            print(locationType)
+//            print(userDocumentReference.path)
+//            print("current loc coords:", currentLocCoords)
             completion(currentLocCoords)
         }
     }
@@ -101,29 +108,30 @@ class UserManager {
      one specified.
      todo (Alexis): fix this function so it is working properly or remove it
      */
-    func getAllLocationTypesCoordsForUser(userDocumentReference : DocumentReference, completion: @escaping ([(String, CLLocationDegrees, CLLocationDegrees)]) -> Void) {
-        var allLocations : [(String, CLLocationDegrees, CLLocationDegrees)] = []
-        for locationType in validLocations {
-            let query = userDocumentReference.collection("locations").whereField("locationType", isEqualTo: locationType)
-            query.getDocuments { snapshot, error in
-                print(error ?? "No error.")
-                guard let snapshot = snapshot else {
-                    completion([("",9.0, 9.0)]) //dummy unused value
-                    return
-                }
-                for doc in snapshot.documents {
-                    allLocations.append((locationType, doc.data()["longitude"] as! CLLocationDegrees, doc.data()["latitude"] as! CLLocationDegrees))
-                }
-                //completion(currentLocCoords)
-            }
-        }
-        completion(allLocations)
-    }
+//    func getAllLocationTypesCoordsForUser(userDocumentReference : DocumentReference, completion: @escaping ([(String, CLLocationDegrees, CLLocationDegrees)]) -> Void) {
+//        var allLocations : [(String, CLLocationDegrees, CLLocationDegrees)] = []
+//        for locationType in validLocations {
+//            let query = userDocumentReference.collection("locations").whereField("locationType", isEqualTo: locationType)
+//            query.getDocuments { snapshot, error in
+//                print(error ?? "No error.")
+//                guard let snapshot = snapshot else {
+//                    completion([("",9.0, 9.0)]) //dummy unused value
+//                    return
+//                }
+//                for doc in snapshot.documents {
+//                    allLocations.append((locationType, doc.data()["longitude"] as! CLLocationDegrees, doc.data()["latitude"] as! CLLocationDegrees))
+//                }
+//                //completion(currentLocCoords)
+//            }
+//        }
+//        completion(allLocations)
+//    }
     
     /* This function fetches all location data for all friends of the current user and creates a User object for each friend.
      It populates the instance variable array friendUsers with these user objects for ease of use in the view controller.
      */
     func getFriendsLocations(completion: @escaping () -> Void) {
+        
         getFriendsEmails{friendEmails in
             for emailAddress in friendEmails {
                 let query = self.dbRef.whereField("email", isEqualTo: emailAddress)
@@ -133,7 +141,9 @@ class UserManager {
                         completion()
                         return
                     }
-                    for doc in snapshot.documents {
+                    //for doc in snapshot.documents {
+                    let doc = snapshot.documents[0]
+                    self.friendUsers = []
                         self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "current"){(currfetchedLong, currfetchedLat) in
                             self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "work"){(workfetchedLong, workfetchedLat) in
                                 self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "school"){(schoolfetchedLong, schoolfetchedLat) in
@@ -141,8 +151,8 @@ class UserManager {
                                         self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "dentist"){(dentistfetchedLong, dentistfetchedLat) in
                                             self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "home"){(homefetchedLong, homefetchedLat) in
                                                 
-                                                //                                print("fetched: ", workfetchedLong, workfetchedLat)
-                                                //                                print("email: ", emailAddress)
+//                                                print("fetched: ", dentistfetchedLong, dentistfetchedLat)
+//                                                print("email: ", emailAddress)
                                                 
                                                 let friendUser = User(emailAddress: emailAddress)
                                                 friendUser.currentLocation = (currfetchedLong, currfetchedLat)
@@ -152,6 +162,7 @@ class UserManager {
                                                 friendUser.dentistLocation = (dentistfetchedLong, dentistfetchedLat)
                                                 friendUser.homeLocation = (homefetchedLong, homefetchedLat)
                                                 self.friendUsers.append(friendUser)
+                                                //print("get friends locations", friendUser.dentistLocation)
                                                 completion()
                                                 //                            print(self.friendUsers.map{$0.email}, self.friendUsers.map{$0.currentLongitude}, self.friendUsers.map{$0.currentLatitude})
                                             }
@@ -160,10 +171,13 @@ class UserManager {
                                 }
                             }
                         }
-                    }
+                    //}
+                   
                 }
+                
             }
         }
+        
     }
     
     
@@ -257,14 +271,15 @@ class User {
     
     func getLocation() -> String {
         let currentLocation = CLLocation(latitude: self.currentLocation.1, longitude: self.currentLocation.0)
-        print("current location:", currentLocation)
         let locations = [("home", homeLocation), ("work", workLocation), ("school", schoolLocation), ("gym", gymLocation), ("dentist", dentistLocation)]
         
         for (label,(long, lat)) in locations {
             let newLocation = CLLocation(latitude: lat, longitude: long)
             let distance = newLocation.distance(from: currentLocation)
-            //print(label,long,lat, " distance from current: ", distance)
+//            print(self.email)
+//            print(label,long,lat, " distance from current: ", distance)
             if(distance <= 10){
+                print(self.email, label)
                 return label
             }
         }

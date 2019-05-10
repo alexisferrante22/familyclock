@@ -14,33 +14,70 @@ class LocSelectViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var location: UILabel!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var instructionLabel: UILabel!
+    @IBOutlet weak var done: UIButton!
+    @IBOutlet weak var selectLabel: UILabel!
     
-    var locations = ["home", "work", "school", "dentist", "gym", "done!"]
+    var locations = ["home", "work", "school", "dentist", "gym"]
     //coordinates stored in the coordinates variable will be in the order of: home, work, school, dentist, gym
-    var coordinates: [CLLocationCoordinate2D] = []
-    let mapRadius: CLLocationDistance = 7000000
-    var userLocationData : [(String,(CLLocationDegrees, CLLocationDegrees))] = []
-    let newPin = MKPointAnnotation()
+    var coordinates = [CLLocationCoordinate2D(),CLLocationCoordinate2D(),CLLocationCoordinate2D(),CLLocationCoordinate2D(),CLLocationCoordinate2D()]
+    
+    var userLocationData = [("",(CLLocationDegrees(0.0), CLLocationDegrees(0.0))), ("",(CLLocationDegrees(0.0), CLLocationDegrees(0.0))), ("",(CLLocationDegrees(0.0), CLLocationDegrees(0.0))), ("",(CLLocationDegrees(0.0), CLLocationDegrees(0.0))), ("",(CLLocationDegrees(0.0), CLLocationDegrees(0.0)))]
+    
+    let userPin = MKPointAnnotation()
     var locationManager = CLLocationManager()
+    var userManager = UserManager()
+    var index = 0
+    var annotations = [MKPointAnnotation(),MKPointAnnotation(),MKPointAnnotation(),MKPointAnnotation(),MKPointAnnotation()]
     
     @IBAction func tapGesture(_ sender: Any) {
+        //print("index, ", index)
+        //print(userLocationData)
         if ((sender as AnyObject).state == .ended) {
-            let locationInView = (sender as AnyObject).location(in: mapView)
-            let tappedCoordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
-            
-            if (coordinates.count < 5) {
-                coordinates.append(tappedCoordinate)
-                userLocationData.append((locations[userLocationData.count], (tappedCoordinate.longitude, tappedCoordinate.latitude)))
-                print(userLocationData)
-                location.text = locations[coordinates.count]
+            if (index < locations.count) {
+                let locationInView = (sender as AnyObject).location(in: mapView)
+                let tappedCoordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
+                coordinates[index] = tappedCoordinate
+                userLocationData[index] = ((locations[index], (tappedCoordinate.longitude, tappedCoordinate.latitude)))
+                
+                dropPin(name: locations[index], place: tappedCoordinate)
+                index += 1
+                //print(userLocationData)
+                if (index > locations.count-1) {
+                    done.isHidden = false
+                    location.isHidden = true
+                    selectLabel.text = "Tap 'next' to proceed"
+                } else {
+                    location.text = locations[index]
+                }
             }
-            print(coordinates)
-            print("")
-            dropPin(name: locations[coordinates.count-1], place: tappedCoordinate)
-            if (coordinates.count >= 5) {
-                print("continue")
-                //connect to next page here
-                self.performSegue(withIdentifier: "LocSelectToTabViewSegue", sender: self)
+        }
+    }
+    
+    
+    @IBAction func doneButton(_ sender: Any) {
+        userLocationData.insert(("current", (locationManager.location?.coordinate.longitude ?? 0.0, locationManager.location?.coordinate.latitude ?? 0.0)), at: 0)
+        //print(userLocationData)
+        
+        userManager.initializeIfNewUser(locationData: userLocationData){ isNewUser in
+            //print("initialized user")
+            //connect to next page
+            self.performSegue(withIdentifier: "LocSelectToTabViewSegue", sender: self)
+        }
+    }
+    
+        
+    
+    @IBAction func prevButton(_ sender: Any) {
+        if (index > 0) {
+            index -= 1
+            mapView.removeAnnotation(annotations[index])
+            print(annotations[index])
+            location.text = locations[index]
+            if (done.isHidden == false) {
+                done.isHidden = true
+                selectLabel.text = "Select Location:"
+                location.isHidden = false
             }
         }
     }
@@ -49,6 +86,7 @@ class LocSelectViewController: UIViewController, CLLocationManagerDelegate {
         let pin = MKPointAnnotation()
         pin.coordinate = place
         pin.title = name
+        annotations[index] = pin
         mapView.addAnnotation(pin)
     }
     
@@ -58,21 +96,36 @@ class LocSelectViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    func checkAuth() {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkAuth()
         locationManager.delegate = self
+        self.mapView.addSubview(location)
+        self.mapView.addSubview(instructionLabel)
+        self.mapView.bringSubviewToFront(location)
+        self.mapView.bringSubviewToFront(instructionLabel)
         location.text = locations[0]
+        done.isHidden = true
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations points: [CLLocation]) {
-        mapView.removeAnnotation(newPin)
+        mapView.removeAnnotation(userPin)
         let point = points.last! as CLLocation
         let center = CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude)
         let area = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
         mapView.setRegion(area, animated: true)
-        newPin.coordinate = point.coordinate
-        newPin.title = "You"
-        mapView.addAnnotation(newPin)
+        userPin.coordinate = point.coordinate
+        userPin.title = "You"
+        mapView.addAnnotation(userPin)
     }
     
     
@@ -86,5 +139,7 @@ class LocSelectViewController: UIViewController, CLLocationManagerDelegate {
      }
      */
     
-}
 
+
+
+}

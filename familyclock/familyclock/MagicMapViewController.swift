@@ -14,14 +14,28 @@ class MagicMapController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     
     var locationManager = CLLocationManager()
+    var userManager = UserManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addAnnotations(people: ["A":CLLocationCoordinate2D(latitude: 37.332, longitude: -122.0111),
-                                "B":CLLocationCoordinate2D(latitude: 37.3422, longitude: -122.0256),
-                                "C":CLLocationCoordinate2D(latitude: 37.3512, longitude: -122.0056)])
-        self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+        var people : [String:CLLocationCoordinate2D] = [:]
+        userManager.getFriendsLocations {
+            print("getting friends locations for ", self.userManager.user?.email)
+            for friendUser in self.userManager.friendUsers {
+                people[friendUser.email] = CLLocationCoordinate2D(latitude: friendUser.currentLocation.1, longitude: friendUser.currentLocation.0)
+                print("map friends locations",friendUser.email, friendUser.currentLocation)
+            }
+            //add current user to map also
+            people[(self.userManager.user?.email)!] = self.locationManager.location?.coordinate
+            print("people", people)
+            self.addAnnotations(people: people)
+            self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+        }
+//        people[(self.userManager.user?.email)!] = self.locationManager.location?.coordinate
+//        print("people", people)
+//        self.addAnnotations(people: people)
+//        self.mapView.showAnnotations(self.mapView.annotations, animated: true)
     }
     
     func addAnnotations(people: [String: CLLocationCoordinate2D]) {
