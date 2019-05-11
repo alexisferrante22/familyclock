@@ -20,8 +20,7 @@ class LocSelectViewController: UIViewController, CLLocationManagerDelegate  {
     @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
         if (sender.state == .ended) {
             if (index < locations.count) {
-                let locationInView = sender.location(in: mapView)
-                let tappedCoordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
+                let tappedCoordinate = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
                 coordinates[index] = tappedCoordinate
                 dropPin(name: locations[index], place: tappedCoordinate)
                 index += 1
@@ -48,6 +47,7 @@ class LocSelectViewController: UIViewController, CLLocationManagerDelegate  {
             }
         }
     }
+    
     @IBAction func nextButton(_ sender: Any) {
         //segue here!
     }
@@ -57,6 +57,8 @@ class LocSelectViewController: UIViewController, CLLocationManagerDelegate  {
     var locations = ["Home", "Work", "School", "Dentist", "Gym"]
     var coordinates = [CLLocationCoordinate2D(),CLLocationCoordinate2D(),CLLocationCoordinate2D(),CLLocationCoordinate2D(),CLLocationCoordinate2D()]
     var annotations = [MKPointAnnotation(),MKPointAnnotation(),MKPointAnnotation(),MKPointAnnotation(),MKPointAnnotation()]
+    var locationManager = CLLocationManager()
+    let userPin = MKPointAnnotation()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,14 +68,14 @@ class LocSelectViewController: UIViewController, CLLocationManagerDelegate  {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations points: [CLLocation]) {
-        mapView.removeAnnotation(newPin)
+        mapView.removeAnnotation(userPin)
         let point = points.last! as CLLocation
         let center = CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude)
         let area = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
         mapView.setRegion(area, animated: true)
-        newPin.coordinate = point.coordinate
-        newPin.title = "You"
-        mapView.addAnnotation(newPin)
+        userPin.coordinate = point.coordinate
+        userPin.title = "You"
+        mapView.addAnnotation(userPin)
     }
     
     func checkAuth() {
@@ -88,6 +90,7 @@ class LocSelectViewController: UIViewController, CLLocationManagerDelegate  {
         let pin = MKPointAnnotation()
         pin.coordinate = place
         pin.title = name
+        annotations[index] = pin
         mapView.addAnnotation(pin)
     }
 }
