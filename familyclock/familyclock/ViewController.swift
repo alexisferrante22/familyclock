@@ -402,42 +402,42 @@ class ViewController: UIViewController {
             
             if (userNumber == 1) {
                 UIView.animate(withDuration: 3) {
-                    self.assignAnchorToLocation(anchor: self.anchor)
+                    self.assignAnchorToLocation(anchor: self.anchor, userIndex: 0)
                 }
             } else if (userNumber == 2) {
                 UIView.animate(withDuration: 3) {
-                    self.assignAnchorToLocation(anchor: self.anchor)
-                    self.assignAnchorToLocation(anchor: self.anchor2)
+                    self.assignAnchorToLocation(anchor: self.anchor, userIndex: 0)
+                    self.assignAnchorToLocation(anchor: self.anchor2, userIndex: 1)
                 }
             } else if (userNumber == 3) {
                 UIView.animate(withDuration: 3) {
-                    self.assignAnchorToLocation(anchor: self.anchor)
-                    self.assignAnchorToLocation(anchor: self.anchor2)
-                    self.assignAnchorToLocation(anchor: self.anchor3)
+                    self.assignAnchorToLocation(anchor: self.anchor, userIndex: 0)
+                    self.assignAnchorToLocation(anchor: self.anchor2, userIndex: 1)
+                    self.assignAnchorToLocation(anchor: self.anchor3, userIndex: 2)
                 }
             } else if (userNumber == 4) {
                 UIView.animate(withDuration: 3) {
-                    self.assignAnchorToLocation(anchor: self.anchor)
-                    self.assignAnchorToLocation(anchor: self.anchor2)
-                    self.assignAnchorToLocation(anchor: self.anchor3)
-                    self.assignAnchorToLocation(anchor: self.anchor4)
+                    self.assignAnchorToLocation(anchor: self.anchor, userIndex: 0)
+                    self.assignAnchorToLocation(anchor: self.anchor2, userIndex: 1)
+                    self.assignAnchorToLocation(anchor: self.anchor3, userIndex: 2)
+                    self.assignAnchorToLocation(anchor: self.anchor4, userIndex: 3)
                 }
             } else if (userNumber == 5) {
                 UIView.animate(withDuration: 3) {
-                    self.assignAnchorToLocation(anchor: self.anchor)
-                    self.assignAnchorToLocation(anchor: self.anchor2)
-                    self.assignAnchorToLocation(anchor: self.anchor3)
-                    self.assignAnchorToLocation(anchor: self.anchor4)
-                    self.assignAnchorToLocation(anchor: self.anchor5)
+                    self.assignAnchorToLocation(anchor: self.anchor, userIndex: 0)
+                    self.assignAnchorToLocation(anchor: self.anchor2, userIndex: 1)
+                    self.assignAnchorToLocation(anchor: self.anchor3, userIndex: 2)
+                    self.assignAnchorToLocation(anchor: self.anchor4, userIndex: 3)
+                    self.assignAnchorToLocation(anchor: self.anchor5, userIndex: 4)
                 }
             } else if (userNumber == 6) {
                 UIView.animate(withDuration: 3) {
-                    self.assignAnchorToLocation(anchor: self.anchor)
-                    self.assignAnchorToLocation(anchor: self.anchor2)
-                    self.assignAnchorToLocation(anchor: self.anchor3)
-                    self.assignAnchorToLocation(anchor: self.anchor4)
-                    self.assignAnchorToLocation(anchor: self.anchor5)
-                    self.assignAnchorToLocation(anchor: self.anchor6)
+                    self.assignAnchorToLocation(anchor: self.anchor, userIndex: 0)
+                    self.assignAnchorToLocation(anchor: self.anchor2, userIndex: 1)
+                    self.assignAnchorToLocation(anchor: self.anchor3, userIndex: 2)
+                    self.assignAnchorToLocation(anchor: self.anchor4, userIndex: 3)
+                    self.assignAnchorToLocation(anchor: self.anchor5, userIndex: 4)
+                    self.assignAnchorToLocation(anchor: self.anchor6, userIndex: 5)
                 }
             }
         }
@@ -454,11 +454,12 @@ class ViewController: UIViewController {
     }
     
     
-    func assignAnchorToLocation(anchor: UIView) {
+    func assignAnchorToLocation(anchor: UIView, userIndex: Int) {
         print("assign anchor called")
         users = userManager.friendUsers
         print("fjkfjkejke", users.map({$0.email}))
-        for location in users {
+        //for location in users {
+        let location = users[userIndex]
             let position = location.getLocation()
             print("position:", position)
             if (position == "work") {
@@ -474,7 +475,7 @@ class ViewController: UIViewController {
             } else {
                 anchor.transform = CGAffineTransform(rotationAngle: self.lostAngle)
             }
-        }
+        //}
     }
     
     
