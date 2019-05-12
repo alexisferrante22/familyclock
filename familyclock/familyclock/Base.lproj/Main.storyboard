@@ -217,9 +217,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bq7-gf-uaM">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bq7-gf-uaM">
                                 <rect key="frame" x="0.0" y="124" width="375" height="543"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="gF7-yl-tS2" appends="YES" id="tOw-3b-A8f"/>
@@ -261,6 +260,12 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="95k-od-491" firstAttribute="bottom" secondItem="bq7-gf-uaM" secondAttribute="bottom" id="Bnq-bi-kKZ"/>
+                            <constraint firstItem="bq7-gf-uaM" firstAttribute="leading" secondItem="95k-od-491" secondAttribute="leading" id="iqN-KC-h8a"/>
+                            <constraint firstItem="bq7-gf-uaM" firstAttribute="top" secondItem="95k-od-491" secondAttribute="top" constant="104" id="tYs-HX-3sj"/>
+                            <constraint firstItem="95k-od-491" firstAttribute="trailing" secondItem="bq7-gf-uaM" secondAttribute="trailing" id="tf8-Fn-Ic7"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="95k-od-491"/>
                     </view>
                     <connections>
