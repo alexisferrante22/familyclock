@@ -106,29 +106,6 @@ class UserManager {
         }
     }
     
-    /* same functionality as getLocationTypeCoordsForUser, but aggregates data for all location types rather than just the
-     one specified.
-     todo (Alexis): fix this function so it is working properly or remove it
-     */
-//    func getAllLocationTypesCoordsForUser(userDocumentReference : DocumentReference, completion: @escaping ([(String, CLLocationDegrees, CLLocationDegrees)]) -> Void) {
-//        var allLocations : [(String, CLLocationDegrees, CLLocationDegrees)] = []
-//        for locationType in validLocations {
-//            let query = userDocumentReference.collection("locations").whereField("locationType", isEqualTo: locationType)
-//            query.getDocuments { snapshot, error in
-//                print(error ?? "No error.")
-//                guard let snapshot = snapshot else {
-//                    completion([("",9.0, 9.0)]) //dummy unused value
-//                    return
-//                }
-//                for doc in snapshot.documents {
-//                    allLocations.append((locationType, doc.data()["longitude"] as! CLLocationDegrees, doc.data()["latitude"] as! CLLocationDegrees))
-//                }
-//                //completion(currentLocCoords)
-//            }
-//        }
-//        completion(allLocations)
-//    }
-    
     /* This function fetches all location data for all friends of the current user and creates a User object for each friend.
      It populates the instance variable array friendUsers with these user objects for ease of use in the view controller.
      */
@@ -147,7 +124,6 @@ class UserManager {
                     }
                     //for doc in snapshot.documents {
                     let doc = snapshot.documents[0]
-                    
                         self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "current"){(currfetchedLong, currfetchedLat) in
                             self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "work"){(workfetchedLong, workfetchedLat) in
                                 self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "school"){(schoolfetchedLong, schoolfetchedLat) in
@@ -155,11 +131,7 @@ class UserManager {
                                         self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "dentist"){(dentistfetchedLong, dentistfetchedLat) in
                                             self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "home"){(homefetchedLong, homefetchedLat) in
                                                 index += 1
-                                                print(index)
-                                                print(friendEmails.count)
-//                                                print("fetched: ", dentistfetchedLong, dentistfetchedLat)
-//                                                print("email: ", emailAddress)
-                                                
+                                                //print("index: \(index), friendemails.count: \(friendEmails.count)")
                                                 let friendUser = User(emailAddress: emailAddress)
                                                 friendUser.currentLocation = (currfetchedLong, currfetchedLat)
                                                 friendUser.workLocation = (workfetchedLong, workfetchedLat)
@@ -174,7 +146,6 @@ class UserManager {
                                                     completion(friendEmails.count, fu)
                                                 }
                                                 //print("get friends locations", friendUser.dentistLocation)
-                                                //completion()
                                                 //                            print(self.friendUsers.map{$0.email}, self.friendUsers.map{$0.currentLongitude}, self.friendUsers.map{$0.currentLatitude})
                                             }
                                         }
@@ -182,14 +153,12 @@ class UserManager {
                                 }
                             }
                         }
-                    //}
-                   
                 }
-                
             }
-
+            if(friendEmails.count == 0){
+                completion(0,[])
+            }
         }
-        
     }
     
     
@@ -259,7 +228,29 @@ class UserManager {
             }
         }
     }
+    
+    /* adds a friend's email to the current user's list of friends in the DB */
+    func deleteFriend(friendEmail : String, completion: @escaping () -> Void) {
+        if(user != nil){
+            getNumberOfFriends{ numFriends in
+                self.dbRef.document((self.user?.uid)!).collection("friends").getDocuments() { (snapshot, error) in
+                    print(error ?? "No error.")
+                    guard let snapshot = snapshot else {
+                        return
+                    }
+                    for doc in snapshot.documents{
+                        if (doc.data()["email"] as! String == friendEmail){
+                            print(doc.description)
+                        }
+                    }
+                }
+                //data: ["email": friendEmail]
+                completion()
+            }
+        }
+    }
 }
+
 
 /* class used to store user data so it is easily accessed from the view controllers.
 Through functions like GetFriendsLocations, data from the DB is read and stored in
@@ -291,7 +282,7 @@ class User {
 //            print(self.email)
 //            print(label,long,lat, " distance from current: ", distance)
             if(distance <= 10){
-                print(self.email, label)
+                //print(self.email, label)
                 return label
             }
         }

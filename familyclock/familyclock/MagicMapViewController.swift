@@ -21,15 +21,15 @@ class MagicMapController: UIViewController, CLLocationManagerDelegate {
         
         var people : [String:CLLocationCoordinate2D] = [:]
         userManager.getFriendsLocations { userNumber, fu in
-            print("getting friends locations for ", self.userManager.user?.email)
-            for friendUser in self.userManager.friendUsers {
+            for friendUser in fu {
                 people[friendUser.email] = CLLocationCoordinate2D(latitude: friendUser.currentLocation.1, longitude: friendUser.currentLocation.0)
-                print("map friends locations",friendUser.email, friendUser.currentLocation)
+                //print("map friends locations",friendUser.email, friendUser.currentLocation)
             }
             //add current user to map also
             people[(self.userManager.user?.email)!] = self.locationManager.location?.coordinate
-            print("people", people)
+            //print("people", people)
             self.addAnnotations(people: people)
+            //print("annotations:", self.mapView.annotations.count)
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
         }
 //        people[(self.userManager.user?.email)!] = self.locationManager.location?.coordinate

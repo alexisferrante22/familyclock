@@ -26,12 +26,22 @@
                                     <action selector="signInButtonPress:" destination="uNc-ZQ-3eO" eventType="valueChanged" id="YOF-Hf-OeE"/>
                                 </connections>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cg3-q4-rYU">
+                                <rect key="frame" x="173" y="437" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Go!"/>
+                                <connections>
+                                    <action selector="signInButton:" destination="uNc-ZQ-3eO" eventType="touchUpInside" id="tmu-Lm-I3a"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                         <viewLayoutGuide key="safeArea" id="CRQ-Mu-9Bg"/>
                     </view>
                     <navigationItem key="navigationItem" id="Yq5-Ll-8PK"/>
                     <connections>
+                        <outlet property="goButton" destination="Cg3-q4-rYU" id="McL-GN-Fbz"/>
+                        <outlet property="googleButton" destination="WMU-P0-IHQ" id="mbc-9T-1ja"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="signinToClockSegue" id="PLn-OF-FOK"/>
                         <segue destination="r1x-v4-JyQ" kind="presentation" identifier="signInToTabBarSegue" id="vbH-Y3-VhH"/>
                     </connections>

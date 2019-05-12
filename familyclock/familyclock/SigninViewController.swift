@@ -14,7 +14,9 @@ import FirebaseAuth
 class SigninViewController: UIViewController, GIDSignInUIDelegate {
 
     var handle: AuthStateDidChangeListenerHandle?
+    @IBOutlet weak var googleButton: GIDSignInButton!
     
+    @IBOutlet weak var goButton: UIButton!
     
 //    override func viewWillAppear(_ animated: Bool) {
 //        handle = Auth.auth().addStateDidChangeListener() { (auth, user) in
@@ -30,13 +32,12 @@ class SigninViewController: UIViewController, GIDSignInUIDelegate {
         
         GIDSignIn.sharedInstance().uiDelegate = self
         
-//        GIDSignIn.sharedInstance().signOut()
-//        GIDSignIn.sharedInstance().disconnect()
-        
-        let googleButton = GIDSignInButton()
-        googleButton.frame = CGRect(x: 16, y:116+66, width: view.frame.width - 32, height: 50)
-        view.addSubview(googleButton)
-        googleButton.addTarget(self, action: #selector (handleGoogleSignIn), for: .touchUpInside)
+        GIDSignIn.sharedInstance().signOut()
+        GIDSignIn.sharedInstance().disconnect()
+
+//        googleButton.frame = CGRect(x: 16, y:116+66, width: view.frame.width - 32, height: 50)
+//        view.addSubview(googleButton)
+//        googleButton.addTarget(self, action: #selector (handleGoogleSignIn), for: .touchUpInside)
         
 //        GIDSignIn.sharedInstance().signIn()
 
@@ -46,11 +47,12 @@ class SigninViewController: UIViewController, GIDSignInUIDelegate {
 //                self.performSegue(withIdentifier: "signInToTabBarSegue", sender: self)
 //            }
 //        }
-        
-        // TODO(developer) Configure the sign-in button look/feel
-        // ...
-
-        // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func signInButton(_ sender: Any) {
+        if Auth.auth().currentUser != nil {
+            self.performSegue(withIdentifier: "signInToTabBarSegue", sender: self)
+        }
     }
     
     @objc func handleGoogleSignIn(){
@@ -66,6 +68,7 @@ class SigninViewController: UIViewController, GIDSignInUIDelegate {
         GIDSignIn.sharedInstance().signIn()
         
         if Auth.auth().currentUser != nil {
+            goButton.isHidden = false
             self.performSegue(withIdentifier: "signInToTabBarSegue", sender: self)
         }
     }
