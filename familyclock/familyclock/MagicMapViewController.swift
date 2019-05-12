@@ -20,7 +20,7 @@ class MagicMapController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         
         var people : [String:CLLocationCoordinate2D] = [:]
-        userManager.getFriendsLocations {
+        userManager.getFriendsLocations { userNumber, fu in
             print("getting friends locations for ", self.userManager.user?.email)
             for friendUser in self.userManager.friendUsers {
                 people[friendUser.email] = CLLocationCoordinate2D(latitude: friendUser.currentLocation.1, longitude: friendUser.currentLocation.0)

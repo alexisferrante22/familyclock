@@ -324,11 +324,14 @@ class ViewController: UIViewController {
 //            
 //        }
         
-        userManager.getFriendsLocations {
-            self.users = self.userManager.friendUsers
-            let userNumber = self.users.count
+        userManager.getFriendsLocations { userNumber, fu in
+            self.userManager.friendUsers = fu
+//            self.users = self.userManager.friendUsers
+//            let userNumber = self.users.count
             print("VDL users", self.userManager.friendUsers.map({$0.email}))
+            print("FU", fu.map({$0.email}))
             print("VDL user number", userNumber)
+            
             
             if (userNumber == 1) {
                 self.anchor = self.createAnchor(anchor: self.anchor)
@@ -387,11 +390,12 @@ class ViewController: UIViewController {
 
     
     override func viewWillAppear(_ animated: Bool) {
-        userManager.getFriendsLocations {
+        userManager.getFriendsLocations { userNumber, fu in
+            self.userManager.friendUsers = fu
             
-            self.users = self.userManager.friendUsers
-            //print("users", self.users.map({$0.currentLocation}))
-            let userNumber = self.users.count
+//            self.users = self.userManager.friendUsers
+//            //print("users", self.users.map({$0.currentLocation}))
+//            let userNumber = self.users.count
             
             print("VWA users", self.userManager.friendUsers.map({$0.email}))
             print("VWA user number", userNumber)
@@ -451,8 +455,9 @@ class ViewController: UIViewController {
     
     
     func assignAnchorToLocation(anchor: UIView) {
+        print("assign anchor called")
         users = userManager.friendUsers
-        print(users.map({$0.email}))
+        print("fjkfjkejke", users.map({$0.email}))
         for location in users {
             let position = location.getLocation()
             print("position:", position)

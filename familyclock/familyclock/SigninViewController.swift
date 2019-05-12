@@ -30,8 +30,8 @@ class SigninViewController: UIViewController, GIDSignInUIDelegate {
         
         GIDSignIn.sharedInstance().uiDelegate = self
         
-        GIDSignIn.sharedInstance().signOut()
-        GIDSignIn.sharedInstance().disconnect()
+//        GIDSignIn.sharedInstance().signOut()
+//        GIDSignIn.sharedInstance().disconnect()
         
         let googleButton = GIDSignInButton()
         googleButton.frame = CGRect(x: 16, y:116+66, width: view.frame.width - 32, height: 50)

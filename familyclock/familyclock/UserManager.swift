@@ -71,7 +71,9 @@ class UserManager {
                 return
             }
             for doc in snapshot.documents {
-                friendEmails.append(doc.data()["email"] as! String)
+                if(!friendEmails.contains(doc.data()["email"] as! String)){
+                    friendEmails.append(doc.data()["email"] as! String)
+                }
             }
             completion(friendEmails)
         }
@@ -130,27 +132,31 @@ class UserManager {
     /* This function fetches all location data for all friends of the current user and creates a User object for each friend.
      It populates the instance variable array friendUsers with these user objects for ease of use in the view controller.
      */
-    func getFriendsLocations(completion: @escaping () -> Void) {
-        
+    func getFriendsLocations(completion: @escaping (Int, [User]) -> Void) {
+        var index = 0
+        self.friendUsers = []
+        var fu : [User] = []
         getFriendsEmails{friendEmails in
             for emailAddress in friendEmails {
                 let query = self.dbRef.whereField("email", isEqualTo: emailAddress)
                 query.getDocuments { snapshot, error in
                     print(error ?? "No error.")
                     guard let snapshot = snapshot else {
-                        completion()
+                        completion(0, [])
                         return
                     }
                     //for doc in snapshot.documents {
                     let doc = snapshot.documents[0]
-                    self.friendUsers = []
+                    
                         self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "current"){(currfetchedLong, currfetchedLat) in
                             self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "work"){(workfetchedLong, workfetchedLat) in
                                 self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "school"){(schoolfetchedLong, schoolfetchedLat) in
                                     self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "gym"){(gymfetchedLong, gymfetchedLat) in
                                         self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "dentist"){(dentistfetchedLong, dentistfetchedLat) in
                                             self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "home"){(homefetchedLong, homefetchedLat) in
-                                                
+                                                index += 1
+                                                print(index)
+                                                print(friendEmails.count)
 //                                                print("fetched: ", dentistfetchedLong, dentistfetchedLat)
 //                                                print("email: ", emailAddress)
                                                 
@@ -162,8 +168,13 @@ class UserManager {
                                                 friendUser.dentistLocation = (dentistfetchedLong, dentistfetchedLat)
                                                 friendUser.homeLocation = (homefetchedLong, homefetchedLat)
                                                 self.friendUsers.append(friendUser)
+                                                fu.append(friendUser)
+                                                
+                                                if(index == friendEmails.count){
+                                                    completion(friendEmails.count, fu)
+                                                }
                                                 //print("get friends locations", friendUser.dentistLocation)
-                                                completion()
+                                                //completion()
                                                 //                            print(self.friendUsers.map{$0.email}, self.friendUsers.map{$0.currentLongitude}, self.friendUsers.map{$0.currentLatitude})
                                             }
                                         }
@@ -176,6 +187,7 @@ class UserManager {
                 }
                 
             }
+
         }
         
     }
