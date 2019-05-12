@@ -108,10 +108,10 @@ class LocSelectViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         checkAuth()
         locationManager.delegate = self
-        self.mapView.addSubview(location)
-        self.mapView.addSubview(instructionLabel)
-        self.mapView.bringSubviewToFront(location)
-        self.mapView.bringSubviewToFront(instructionLabel)
+        //self.mapView.addSubview(location)
+        //self.mapView.addSubview(instructionLabel)
+        //self.mapView.bringSubviewToFront(location)
+        //self.mapView.bringSubviewToFront(instructionLabel)
         location.text = locations[0]
         done.isHidden = true
         

@@ -41,26 +41,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.performSegue(withIdentifier: "clockToLocationSelect", sender: self)
+        
         userManager.isNewUser{ isNewUser in
             if(isNewUser && self.userLocationData.isEmpty){
                 print("user didn't exist: transition to map select view")
                 self.performSegue(withIdentifier: "clockToLocationSelect", sender: self)
             }
         }
-        
-//        userManager.addFriend(friendEmail: "ginacalenti67@gmail.com"){}
-
-//        userManager.addFriend(friendEmail: "alexisf4567@gmail.com"){}
-
-//        userManager.addFriend(friendEmail: "alexisferrante22@gmail.com"){}
-        
-        userManager.deleteFriend(friendEmail: "ginacalenti67@gmail.com"){}
     }
 
     
     override func viewWillAppear(_ animated: Bool) {
         userManager.getFriendsLocations { userNumber, fu in
             self.userManager.friendUsers = fu
+            print(fu.count)
             
             if (userNumber == 1) {
                 self.anchor = self.createAnchor(anchor: self.anchor)

@@ -232,19 +232,14 @@ class UserManager {
     /* adds a friend's email to the current user's list of friends in the DB */
     func deleteFriend(friendEmail : String, completion: @escaping () -> Void) {
         if(user != nil){
-            getNumberOfFriends{ numFriends in
-                self.dbRef.document((self.user?.uid)!).collection("friends").getDocuments() { (snapshot, error) in
-                    print(error ?? "No error.")
-                    guard let snapshot = snapshot else {
-                        return
-                    }
-                    for doc in snapshot.documents{
-                        if (doc.data()["email"] as! String == friendEmail){
-                            print(doc.description)
-                        }
+            self.dbRef.document((self.user?.uid)!).collection("friends").whereField("email", isEqualTo: friendEmail).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        document.reference.delete()
                     }
                 }
-                //data: ["email": friendEmail]
                 completion()
             }
         }

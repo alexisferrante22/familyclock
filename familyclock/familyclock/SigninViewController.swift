@@ -15,6 +15,7 @@ class SigninViewController: UIViewController, GIDSignInUIDelegate {
 
     var handle: AuthStateDidChangeListenerHandle?
     @IBOutlet weak var googleButton: GIDSignInButton!
+    @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var goButton: UIButton!
     
@@ -29,6 +30,7 @@ class SigninViewController: UIViewController, GIDSignInUIDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        titleLabel.font = titleLabel.font.withSize(35)
         
         GIDSignIn.sharedInstance().uiDelegate = self
         
