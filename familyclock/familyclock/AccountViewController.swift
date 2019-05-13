@@ -20,7 +20,6 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var addFriendTextField: UITextField!
     @IBOutlet weak var addFriendButton: UIButton!
     @IBOutlet weak var deleteFriendTextField: UITextField!
-    var userEmail = "bradleylee16@gmail.com"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,8 +61,6 @@ class AccountViewController: UIViewController {
         do {
             try
                 firebaseAuth.signOut()
-//                GIDSignIn.sharedInstance().signOut()
-//                GIDSignIn.sharedInstance().disconnect()
             self.performSegue(withIdentifier: "accountToSignInSegue", sender: self)
                 
             
@@ -71,16 +68,4 @@ class AccountViewController: UIViewController {
             print ("Error signing out: %@", signOutError)
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -30,6 +30,7 @@ class LocSelectViewController: UIViewController, CLLocationManagerDelegate {
     var index = 0
     var annotations = [MKPointAnnotation(),MKPointAnnotation(),MKPointAnnotation(),MKPointAnnotation(),MKPointAnnotation()]
     
+    
     @IBAction func tapGesture(_ sender: Any) {
         //print("index, ", index)
         //print(userLocationData)

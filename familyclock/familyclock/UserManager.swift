@@ -30,11 +30,9 @@ class UserManager {
             if let document = document, document.exists {
                 isNewUser = false
             } else {
-                //initialize user's location data - select from map?
                 isNewUser = true
                 self.updateUserEmailInDB {
                     for (locationLabel, (longitude, latitude)) in locationData{
-                        print(locationLabel, longitude, latitude)
                         docRef.collection("locations").addDocument(data: ["locationType":locationLabel, "latitude": latitude, "longitude": longitude])
                     }
                 }
@@ -92,16 +90,9 @@ class UserManager {
                 return
             }
             var currentLocCoords : (CLLocationDegrees, CLLocationDegrees) = (0.0, 0.0)
-//            let data = snapshot.documents[0].data()
-//            let currentLocCoords = (data["longitude"], data["latitude"]) as! (CLLocationDegrees, CLLocationDegrees)
             for doc in snapshot.documents {
-                //print("ADJFHJSJDJDJDJDJJDJDJ", doc.data())
                 currentLocCoords = (doc.data()["longitude"], doc.data()["latitude"]) as! (CLLocationDegrees, CLLocationDegrees)
-
             }
-//            print(locationType)
-//            print(userDocumentReference.path)
-//            print("current loc coords:", currentLocCoords)
             completion(currentLocCoords)
         }
     }
@@ -122,6 +113,7 @@ class UserManager {
                         completion(0, [])
                         return
                     }
+                    //if(snapshot.documents.count > 0){
                     //for doc in snapshot.documents {
                     let doc = snapshot.documents[0]
                         self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "current"){(currfetchedLong, currfetchedLat) in
@@ -131,7 +123,6 @@ class UserManager {
                                         self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "dentist"){(dentistfetchedLong, dentistfetchedLat) in
                                             self.getLocationTypeCoordsForUser(userDocumentReference: doc.reference, locationType: "home"){(homefetchedLong, homefetchedLat) in
                                                 index += 1
-                                                //print("index: \(index), friendemails.count: \(friendEmails.count)")
                                                 let friendUser = User(emailAddress: emailAddress)
                                                 friendUser.currentLocation = (currfetchedLong, currfetchedLat)
                                                 friendUser.workLocation = (workfetchedLong, workfetchedLat)
@@ -145,14 +136,13 @@ class UserManager {
                                                 if(index == friendEmails.count){
                                                     completion(friendEmails.count, fu)
                                                 }
-                                                //print("get friends locations", friendUser.dentistLocation)
-                                                //                            print(self.friendUsers.map{$0.email}, self.friendUsers.map{$0.currentLongitude}, self.friendUsers.map{$0.currentLatitude})
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
+                        //}
+                    }
                 }
             }
             if(friendEmails.count == 0){
@@ -274,10 +264,7 @@ class User {
         for (label,(long, lat)) in locations {
             let newLocation = CLLocation(latitude: lat, longitude: long)
             let distance = newLocation.distance(from: currentLocation)
-//            print(self.email)
-//            print(label,long,lat, " distance from current: ", distance)
             if(distance <= 10){
-                //print(self.email, label)
                 return label
             }
         }

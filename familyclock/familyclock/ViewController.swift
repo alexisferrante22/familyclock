@@ -15,7 +15,12 @@ import CoreLocation
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var imageOutlet: UIImageView!
+    @IBOutlet weak var email_1: UILabel!
+    @IBOutlet weak var email_2: UILabel!
+    @IBOutlet weak var email_3: UILabel!
+    @IBOutlet weak var email_4: UILabel!
+    @IBOutlet weak var email_5: UILabel!
+    @IBOutlet weak var email_6: UILabel!
     
     let locationManager = CLLocationManager()
     let db = Firestore.firestore()
@@ -41,8 +46,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.performSegue(withIdentifier: "clockToLocationSelect", sender: self)
-        
         userManager.isNewUser{ isNewUser in
             if(isNewUser && self.userLocationData.isEmpty){
                 print("user didn't exist: transition to map select view")
@@ -55,7 +58,6 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         userManager.getFriendsLocations { userNumber, fu in
             self.userManager.friendUsers = fu
-            print(fu.count)
             
             if (userNumber == 1) {
                 self.anchor = self.createAnchor(anchor: self.anchor)
@@ -147,6 +149,122 @@ class ViewController: UIViewController {
                     self.assignAnchorToLocation(anchor: self.anchor6, userIndex: 5)
                 }
             }
+            
+        }
+        
+        //userManager.getFriendsEmails{ emails1 in
+        userManager.getFriendsLocations { userNumber, fu in
+            let email = fu.map({$0.email})
+            let users = userNumber
+            if(users != 0){
+                if (users == 1) {
+                    self.email_1.isHidden = false
+                    self.email_2.isHidden = true
+                    self.email_3.isHidden = true
+                    self.email_4.isHidden = true
+                    self.email_5.isHidden = true
+                    self.email_6.isHidden = true
+                    self.email_1.text = email[0]
+                    self.email_1.textColor = UIColor.orange
+                    self.email_1.font = UIFont.init(name: "Zapfino", size: 15)
+                } else if (users == 2) {
+                    print("users is 2")
+                    self.email_1.isHidden = false
+                    self.email_2.isHidden = false
+                    self.email_3.isHidden = true
+                    self.email_4.isHidden = true
+                    self.email_5.isHidden = true
+                    self.email_6.isHidden = true
+                    self.email_1.text = email[0]
+                    self.email_1.textColor = UIColor.orange
+                    self.email_1.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_2.text = email[1]
+                    self.email_2.textColor = UIColor.red
+                    self.email_2.font = UIFont.init(name: "Zapfino", size: 15)
+                } else if (users == 3) {
+                    self.email_1.isHidden = false
+                    self.email_2.isHidden = false
+                    self.email_3.isHidden = false
+                    self.email_4.isHidden = true
+                    self.email_5.isHidden = true
+                    self.email_6.isHidden = true
+                    self.email_1.text = email[0]
+                    self.email_1.textColor = UIColor.orange
+                    self.email_1.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_2.text = email[1]
+                    self.email_2.textColor = UIColor.red
+                    self.email_2.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_3.text = email[2]
+                    self.email_3.textColor = UIColor.green
+                    self.email_3.font = UIFont.init(name: "Zapfino", size: 15)
+                } else if (users == 4) {
+                    self.email_1.isHidden = false
+                    self.email_2.isHidden = false
+                    self.email_3.isHidden = false
+                    self.email_4.isHidden = false
+                    self.email_5.isHidden = true
+                    self.email_6.isHidden = true
+                    self.email_1.text = email[0]
+                    self.email_1.textColor = UIColor.orange
+                    self.email_1.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_2.text = email[1]
+                    self.email_2.textColor = UIColor.red
+                    self.email_2.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_3.text = email[2]
+                    self.email_3.textColor = UIColor.green
+                    self.email_3.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_4.text = email[3]
+                    self.email_4.textColor = UIColor.cyan
+                    self.email_4.font = UIFont.init(name: "Zapfino", size: 15)
+                } else if (users == 5) {
+                    self.email_1.isHidden = false
+                    self.email_2.isHidden = false
+                    self.email_3.isHidden = false
+                    self.email_4.isHidden = false
+                    self.email_5.isHidden = false
+                    self.email_6.isHidden = true
+                    self.email_1.text = email[0]
+                    self.email_1.textColor = UIColor.orange
+                    self.email_1.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_2.text = email[1]
+                    self.email_2.textColor = UIColor.red
+                    self.email_2.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_3.text = email[2]
+                    self.email_3.textColor = UIColor.green
+                    self.email_3.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_4.text = email[3]
+                    self.email_4.textColor = UIColor.cyan
+                    self.email_4.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_5.text = email[4]
+                    self.email_5.textColor = UIColor.magenta
+                    self.email_5.font = UIFont.init(name: "Zapfino", size: 15)
+                } else {
+                    self.email_1.isHidden = false
+                    self.email_2.isHidden = false
+                    self.email_3.isHidden = false
+                    self.email_4.isHidden = false
+                    self.email_5.isHidden = false
+                    self.email_6.isHidden = false
+                    self.email_1.text = email[0]
+                    self.email_1.textColor = UIColor.orange
+                    self.email_1.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_2.text = email[1]
+                    self.email_2.textColor = UIColor.red
+                    self.email_2.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_3.text = email[2]
+                    self.email_3.textColor = UIColor.green
+                    self.email_3.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_4.text = email[3]
+                    self.email_4.textColor = UIColor.cyan
+                    self.email_4.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_5.text = email[4]
+                    self.email_5.textColor = UIColor.magenta
+                    self.email_5.font = UIFont.init(name: "Zapfino", size: 15)
+                    self.email_6.text = email[5]
+                    self.email_6.textColor = UIColor.yellow
+                    self.email_6.font = UIFont.init(name: "Zapfino", size: 15)
+                }
+            }
         }
     }
     
@@ -192,13 +310,13 @@ class MyView: UIView {
         ctx.translateBy (x: self.frame.size.width / 2, y: self.frame.size.height / 2)
         ctx.scaleBy (x: 1, y: -1)
         
-        drawText(context: ctx, text: "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", radius: 198, angle: -.pi / 5.5, color: UIColor.black, font: UIFont.init(name: "Zapfino", size: 18)!, flip: false)
-        drawText(context: ctx, text: "HOME 🏠", radius: 165, angle: -.pi / 5.8, color: UIColor.black, font: UIFont.init(name: "Zapfino", size: 16.5)!, flip: true)
-        drawText(context: ctx, text: "WORK 🗄️", radius: 160, angle: .pi / 5.5, color: UIColor.black, font: UIFont.init(name: "Zapfino", size: 16.5)!, flip: true)
-        drawText(context: ctx, text: "LOST ❓", radius: 160, angle: .pi / 2, color: UIColor.black, font: UIFont.init(name: "Zapfino", size: 16.5)!, flip: true)
-        drawText(context: ctx, text: "SCHOOL 🏫", radius: 160, angle: -.pi / 2, color: UIColor.black, font: UIFont.init(name: "Zapfino", size: 16.5)!, flip: true)
-        drawText(context: ctx, text: "GYM 💪🏼", radius: 160, angle: .pi / 0.85, color: UIColor.black, font: UIFont.init(name: "Zapfino", size: 16.5)!, flip: true)
-        drawText(context: ctx, text: "DENTIST 🏥", radius: 160, angle: -.pi / 0.85, color: UIColor.black, font: UIFont.init(name: "Zapfino", size: 16.5)!, flip: true)
+        drawText(context: ctx, text: "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", radius: 198, angle: -.pi / 5.5, color: UIColor.white, font: UIFont.init(name: "Zapfino", size: 18)!, flip: false)
+        drawText(context: ctx, text: "HOME 🏠", radius: 165, angle: -.pi / 5.8, color: UIColor.white, font: UIFont.init(name: "Zapfino", size: 16.5)!, flip: true)
+        drawText(context: ctx, text: "WORK 🗄️", radius: 160, angle: .pi / 5.5, color: UIColor.white, font: UIFont.init(name: "Zapfino", size: 16.5)!, flip: true)
+        drawText(context: ctx, text: "LOST ❓", radius: 160, angle: .pi / 2, color: UIColor.white, font: UIFont.init(name: "Zapfino", size: 16.5)!, flip: true)
+        drawText(context: ctx, text: "SCHOOL 🏫", radius: 160, angle: -.pi / 2, color: UIColor.white, font: UIFont.init(name: "Zapfino", size: 16.5)!, flip: true)
+        drawText(context: ctx, text: "GYM 💪🏼", radius: 160, angle: .pi / 0.85, color: UIColor.white, font: UIFont.init(name: "Zapfino", size: 16.5)!, flip: true)
+        drawText(context: ctx, text: "DENTIST 🏥", radius: 160, angle: -.pi / 0.85, color: UIColor.white, font: UIFont.init(name: "Zapfino", size: 16.5)!, flip: true)
     }
     
     func drawText(context: CGContext, text str: String, radius r: CGFloat, angle delta: CGFloat, color c: UIColor, font: UIFont, flip: Bool){
